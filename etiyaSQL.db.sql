@@ -22,15 +22,16 @@
 
 --7
 SELECT * FROM Products
-WHERE productname LIKE 'n%'
+WHERE (NOT productname LIKE '%n%') AND (productname LIKE 'n%')
 
 --8
 --SELECT * FROM Products 
 --where unitsinstock > 50
 
 --9
---SELECT MIN(unitprice) FROM Products 
---SELECT MAX(unitprice) FROM Products 
+SELECT * FROM Products
+where unitprice = (SELECT MIN(unitprice) FROM Products) 
+	OR unitprice = (SELECT MAX(unitprice) FROM Products)
 
 --10
 --SELECT * FROM Products
