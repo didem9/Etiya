@@ -83,16 +83,15 @@ WHERE Products.ProductName ISNULL
 --11. Verilen Employees tablosunu kullanarak her çalışanın yöneticisiyle birlikte bir liste oluşturun.
 SELECT e1.EmployeeID,
 	CONCAT(e1.FirstName, ' ', e1.LastName) as "Çalışan",
-    CONCAT(e2.FirstName, ' ', e2.LastName) as "Yöneticisi" 
+	CONCAT(e2.FirstName, ' ', e2.LastName) as "Yöneticisi" 
 FROM Employees e1
 join Employees e2 on e1.ReportsTo = e2.EmployeeID
 
 --12. Verilen Products tablosunu kullanarak her kategorideki en pahalı ürünleri 
 ve bu ürünlerin farklı fiyatlara sahip olup olmadığını sorgulayın. ??
 
-SELECT categoryid, productid, unitprice from Products
+SELECT categoryid, productid, MAX(unitprice) from Products
 GROUP by categoryid
-order by unitprice DESC
 
 --13. Verilen Orders ve OrderDetails tablolarını kullanarak bu tabloları birleştirin
 --ve her siparişin detaylarını sipariş ID'sine göre artan sırada listeleyin.
@@ -111,8 +110,11 @@ left JOIN Employees on Orders.EmployeeID = Employees.EmployeeID
 group by Employees.EmployeeID, Employees.FirstName
 
 --15.Verilen Products tablosunu kullanarak bir kategorideki ürünleri kendi arasında fiyatlarına göre karşılaştırın
-ve fiyatı düşük olan ürünleri listeleyin.
-??
+ve fiyatı düşük olan ürünleri listeleyin. ??
+	
+SELECT categoryid, productid, MIN(unitprice) -- bir kategorideki en düşük fiyatlı ürün
+from Products
+GROUP by categoryid
 
 --16. Verilen Products ve Suppliers tablolarını kullanarak tedarikçiden alınan en pahalı ürünleri listeleyin.
 
@@ -131,7 +133,11 @@ GROUP by Employees.EmployeeID
 
 --18. Verilen Products tablosunu kullanarak ürünleri fiyatlarına göre gruplandırın ve fiyatı 20 birimden fazla olan 
 ürünlerin sayısını listeleyin.
-??
+
+SELECT COUNT(productid) AS [Number of Products > 20], categoryid, unitprice
+from Products
+group by unitprice
+HAVING unitprice > 20
 
 --19.Verilen Orders ve Customers tablolarını kullanarak 1997 ile 1998 yılları arasında verilen siparişleri 
 müşteri adıyla birlikte listeleyin.
