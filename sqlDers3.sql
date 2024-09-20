@@ -76,8 +76,8 @@ where [Customer Name] LIKE 'B%'
 ve ürünleri olmayan kategorileri bulun. Ürün adı NULL olan satırları gösterin.
 
 select Categories.CategoryID, Products.ProductID, Products.ProductName
-from Products
-LEFT JOIN Categories on Products.CategoryID = Categories.CategoryID
+from Categories
+LEFT JOIN Products on Products.CategoryID = Categories.CategoryID
 WHERE Products.ProductName ISNULL
 
 --11. Verilen Employees tablosunu kullanarak her çalışanın yöneticisiyle birlikte bir liste oluşturun.
@@ -98,15 +98,15 @@ GROUP by categoryid
 
 select OrderDetails.*
 from OrderDetails
-LEFT JOIN Orders on Orders.OrderID = OrderDetails.OrderID
+JOIN Orders on Orders.OrderID = OrderDetails.OrderID
 order by Orders.OrderID ASC
 
 --14. Verilen Employees ve Orders tablolarını kullanarak her çalışanın kaç tane sipariş işlediğini listeleyin. 
 Sipariş işlemeyen çalışanlar da gösterilsin.
 
 SELECT Employees.EmployeeID, Employees.FirstName, COUNT(Orders.OrderID)
-from Orders
-left JOIN Employees on Orders.EmployeeID = Employees.EmployeeID
+from Employees
+left JOIN Orders on Orders.EmployeeID = Employees.EmployeeID
 group by Employees.EmployeeID, Employees.FirstName
 
 --15.Verilen Products tablosunu kullanarak bir kategorideki ürünleri kendi arasında fiyatlarına göre karşılaştırın
